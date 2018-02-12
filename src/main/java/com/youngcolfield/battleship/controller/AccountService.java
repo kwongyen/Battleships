@@ -33,9 +33,15 @@ public class AccountService {
         throw new RuntimeException();
     }
 
-    public Boolean login(AccountVO accountVO) {
+    public long login(AccountVO accountVO) {
 
-    return true;
+        Account account = accountRepository.findOne(accountVO.getEmail());
+
+        if (account == null || !account.getPassword().equals(accountVO.getPassword())) {
+            throw new RuntimeException();
+        }
+
+    return account.getId();
     }
 
 }

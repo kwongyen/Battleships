@@ -1,7 +1,7 @@
 package com.youngcolfield.battleship.api;
 
 import com.youngcolfield.battleship.controller.AccountService;
-import com.youngcolfield.battleship.domain.Account;
+import com.youngcolfield.battleship.misc.AccountLoginId;
 import com.youngcolfield.battleship.misc.AccountVO;
 import com.youngcolfield.battleship.misc.RegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,33 +19,32 @@ public class AccountEndpoints {
     @Autowired
     private AccountService accountService;
 
+    @Path("/register")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response register(RegisterVO registerVO) {
+        try {
+            AccountLoginId accountLoginId = new AccountLoginId();
+            accountLoginId.setId(accountService.register(registerVO));
+            return Response.accepted(accountLoginId).build();
+        } catch (Exception e) {
+            return Response.status(400).build();
+        }
+    }
+
     @Path("/login")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response loginAccount(AccountVO accountVO) {
 
-        if (accountService.login(accountVO)) {
-
-            return Response.ok("id").build();
-        }
-
-        return Response.status(403).build();
-    }
-
-    @Path("/register")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response register(RegisterVO rvo) {
-        long accountId;
-        try {
-            accountId = accountService.register(rvo);
+        try{
+            AccountLoginId accountLoginId = new AccountLoginId();
+            accountLoginId.setId(accountService.login(accountVO));
+            return Response.ok(accountLoginId).build();
         } catch (Exception e) {
-            return Response.status(400).build();
+            return Response.status(403).build();
         }
-        //Meal result = mealService.save(meal);
-        return Response.accepted(accountId).build();
-        //return Response.ok().build();
     }
 }
