@@ -17,14 +17,15 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public int register(RegisterVO registerVO){
+    public long register(RegisterVO registerVO){
 
         Account account = new Account();
 
-        account.setFirstName(registerVO.getFirstName());
-        account.setLastName(registerVO.getLastName());
+        account.setEmail(registerVO.getEmail());
+        account.setPassword(registerVO.getPassword());
+        account.setUsername(registerVO.getUsername());
 
-        if (accountRepository.findOne(registerVO.getEmailAddress()) == null){
+        if (accountRepository.findOne(registerVO.getEmail()) == null){
             Account registeredAccount = accountRepository.save(account);
             return registeredAccount.getId();
         }

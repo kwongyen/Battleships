@@ -7,13 +7,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
 @Data
+@Entity
 public class Account {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private String emailAddress;
-  private int id;
-  private String firstName;
-  private String lastName;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    private int type;
+
+    private String email;
+    private String password;
+    private String username;
+
 }

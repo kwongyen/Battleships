@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class RegisterVO {
-    private String emailAddress;
-    private String firstName;
-    private String lastName;
+    private String email;
+    private String password;
+    private String username;
 }

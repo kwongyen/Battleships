@@ -38,7 +38,7 @@ public class AccountEndpoints {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response register(RegisterVO rvo) {
-        int accountId;
+        long accountId;
         try {
             accountId = accountService.register(rvo);
         } catch (Exception e) {
