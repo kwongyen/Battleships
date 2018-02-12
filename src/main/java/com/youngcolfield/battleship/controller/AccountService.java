@@ -1,21 +1,41 @@
 package com.youngcolfield.battleship.controller;
 
-import com.youngcolfield.battleship.misc.AccountVO;
-import org.jvnet.hk2.annotations.Service;
+import com.youngcolfield.battleship.domain.Account;
+import com.youngcolfield.battleship.misc.RegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.youngcolfield.battleship.misc.AccountVO;
 
-import javax.transaction.Transactional;
+import java.util.Optional;
+
 
 @Service
 @Transactional
 public class AccountService {
 
-  @Autowired
-  private AccountRepository accountRepository;
+    @Autowired
+    private AccountRepository accountRepository;
 
-  public Boolean login(AccountVO accountVO) {
+    public long register(RegisterVO registerVO){
+
+        Account account = new Account();
+
+        account.setEmail(registerVO.getEmail());
+        account.setPassword(registerVO.getPassword());
+        account.setUsername(registerVO.getUsername());
+
+        if (accountRepository.findOne(registerVO.getEmail()) == null){
+            Account registeredAccount = accountRepository.save(account);
+            return registeredAccount.getId();
+        }
+
+        throw new RuntimeException();
+    }
+
+    public Boolean login(AccountVO accountVO) {
 
     return true;
-  }
+    }
 
 }
