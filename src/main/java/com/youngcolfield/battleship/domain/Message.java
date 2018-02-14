@@ -11,11 +11,14 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @ManyToOne
+    private Game game;
     @ManyToOne
     private Account sender;
     @ManyToOne
     private Account receiver;
+
     private String message;
     private Date date;
-
 }
