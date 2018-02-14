@@ -17,7 +17,7 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public long register(RegisterVO registerVO){
+    public String register(RegisterVO registerVO){
 
         Account account = new Account();
 
@@ -27,13 +27,13 @@ public class AccountService {
 
         if (accountRepository.findOne(registerVO.getEmail()) == null){
             Account registeredAccount = accountRepository.save(account);
-            return registeredAccount.getId();
+            return registeredAccount.getEmail();
         }
 
         throw new RuntimeException();
     }
 
-    public long login(AccountVO accountVO) {
+    public String login(AccountVO accountVO) {
 
         Account account = accountRepository.findOne(accountVO.getEmail());
 
@@ -41,7 +41,7 @@ public class AccountService {
             throw new RuntimeException();
         }
 
-    return account.getId();
+    return account.getEmail();
     }
 
 }

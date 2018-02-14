@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 @Entity
-public class Chat {
+public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

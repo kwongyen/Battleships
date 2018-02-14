@@ -10,9 +10,9 @@ public class Friend {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @ManyToOne
+    @OneToOne
     private Account username;
-    @ManyToOne
+    @OneToOne
     private Account friendname;
 
 }
