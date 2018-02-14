@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class AccountLoginId {
-  private long id;
+  private String id;
 }
