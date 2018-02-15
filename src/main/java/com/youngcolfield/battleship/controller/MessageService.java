@@ -1,6 +1,7 @@
 package com.youngcolfield.battleship.controller;
 
 import com.youngcolfield.battleship.domain.Message;
+import com.youngcolfield.battleship.exceptions.InvalidMessageException;
 import com.youngcolfield.battleship.misc.MessageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,15 +22,17 @@ public class MessageService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public void sendMessage(MessageVO messageVO){
+    public void sendMessage(MessageVO messageVO) throws InvalidMessageException{
 
         Message message = new Message();
+
+        if (accountRepository.findAccountByEmail(messageVO.getReceiver()) == null || accountRepository.findAccountByEmail(messageVO.getSender()) == null) {
+            throw new InvalidMessageException("Either receiver or sender is not a known user");
+        }
 
         message.setMessage(messageVO.getMessage());
         message.setReceiver(accountRepository.findAccountByEmail(messageVO.getReceiver()));
         message.setSender(accountRepository.findAccountByEmail(messageVO.getSender()));
-
-        System.out.println("test");
 
         messageRepository.save(message);
     }
