@@ -10,13 +10,11 @@ import org.springframework.stereotype.Component;
 public interface MessageRepository extends CrudRepository<Message, Long> {
 
     @Query("select m from Message m where m.sender = :id")
-    String findMessagesByGameid(@Param("id") Long id);
+    Message findMessagesByGameid(@Param("id") Long id);
 
     @Query("select m from Message m where m.receiver = :id")
-    String findReceivedMessagesByEmail(@Param("id") String id);
+    Message findReceivedMessagesByEmail(@Param("id") String id);
 
     @Query("select m from Message m where m.sender = :id")
-    String findSentMessagesByEmail(@Param("id") String id);
-    }
-
-
+    Message findSentMessagesByEmail(@Param("id") String id);
+}
