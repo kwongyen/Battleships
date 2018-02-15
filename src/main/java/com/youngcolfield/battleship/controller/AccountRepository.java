@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public interface AccountRepository extends CrudRepository<Account, String> {
     @Query("SELECT a.username from Account a where a.email = :id")
-    String findUsernameByEmail(@Param("id") long id);
+    String findUsernameByEmail(@Param("id") String id);
 
+    @Query("SELECT a from Account a where a.email = :id")
+    Account findAccountByEmail(@Param("id") String id);
 }
