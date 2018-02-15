@@ -1,6 +1,7 @@
 package com.youngcolfield.battleship.config;
 
 import com.youngcolfield.battleship.api.AccountEndpoints;
+import com.youngcolfield.battleship.api.MessageEndpoints;
 import com.youngcolfield.battleship.controller.AccountRepository;
 import com.youngcolfield.battleship.controller.AccountService;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -11,6 +12,7 @@ public class JerseyConfig extends ResourceConfig {
 
   public JerseyConfig() {
     register(AccountEndpoints.class);
+    register(MessageEndpoints.class);
   }
 
   @Bean(name="AccountService")

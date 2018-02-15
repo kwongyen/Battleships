@@ -28,8 +28,9 @@ public class MessageService {
         message.setMessage(messageVO.getMessage());
         message.setReceiver(accountRepository.findAccountByEmail(messageVO.getReceiver()));
         message.setSender(accountRepository.findAccountByEmail(messageVO.getSender()));
+        message.setDate(messageVO.getDate());
 
-        System.out.println("test");
+        //System.out.println("test");
 
         messageRepository.save(message);
     }
