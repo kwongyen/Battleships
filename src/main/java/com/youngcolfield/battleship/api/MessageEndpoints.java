@@ -8,27 +8,31 @@ import com.youngcolfield.battleship.misc.AccountLoginId;
 import com.youngcolfield.battleship.misc.MessageVO;
 import com.youngcolfield.battleship.misc.RegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import sun.misc.resources.Messages;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@Component
+@Path("/message")
 public class MessageEndpoints {
 
     @Autowired
     private MessageService messageService;
     //private Game game;
 
-    @Path("/sendMessage")
+    @Path("/send")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void sendMessage(MessageVO messageVO) {
+    public Response sendMessage(MessageVO messageVO) {
             messageService.sendMessage(messageVO);
+            return Response.ok().build();
     }
 
-    @Path("/receiveMessages")
+    @Path("/receive")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

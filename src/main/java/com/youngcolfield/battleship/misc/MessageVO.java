@@ -8,8 +8,8 @@ import java.util.Date;
 
 @Data
 public class MessageVO {
-    private Account sender;
-    private Account receiver;
+    private String sender;
+    private String receiver;
     private String message;
-    private Date date;
+    private String date;
 }
