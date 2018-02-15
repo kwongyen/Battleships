@@ -23,7 +23,10 @@ public class AccountEndpoints {
     @Autowired
     private AccountService accountService;
 
+    @Path("/register")
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response register(@Valid @NotNull RegisterVO registerVO) {
         try {
             AccountLoginId accountLoginId = new AccountLoginId();
@@ -32,15 +35,6 @@ public class AccountEndpoints {
         } catch (Exception e) {
             return Response.status(HttpStatus.BAD_REQUEST.value()).build();
         }
-    }
-
-    @Path("/else")
-    @GET
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response test(){
-
-        return Response.ok(12).build();
     }
 
     @Path("/login")
