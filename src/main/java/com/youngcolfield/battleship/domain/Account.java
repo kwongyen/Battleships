@@ -11,7 +11,8 @@ public class Account {
     private String email;
 
     @OneToOne
-    private Stats stats;
+    @JoinColumn(name="stats_id")
+    private Stats statsid;
 
     private String password;
     private String username;
