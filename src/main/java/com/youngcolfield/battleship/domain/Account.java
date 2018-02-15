@@ -15,6 +15,7 @@ public class Account {
 
     private String password;
     private String username;
+
     private int type;
     private String bio;
 
