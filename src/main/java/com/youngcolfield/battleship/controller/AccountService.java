@@ -11,39 +11,40 @@ import com.youngcolfield.battleship.misc.AccountVO;
 
 import java.util.Optional;
 
-
 @Service
 @Transactional
 public class AccountService {
 
-    @Autowired
-    private AccountRepository accountRepository;
+  @Autowired
+  private AccountRepository accountRepository;
 
-    public String register(RegisterVO registerVO) throws InvalidRegistrationException {
+  public String register(RegisterVO registerVO) throws InvalidRegistrationException {
 
-        Account account = new Account();
+    Account account = new Account();
 
-        account.setEmail(registerVO.getEmail());
-        account.setPassword(registerVO.getPassword());
-        account.setUsername(registerVO.getUsername());
-        account.setType(1);
+    account.setEmail(registerVO.getEmail());
+    account.setPassword(registerVO.getPassword());
+    account.setUsername(registerVO.getUsername());
+    account.setType(1);
 
-        Account registeredAccount = accountRepository.save(account);
+    String username = accountRepository.findUsernameByEmail(registerVO.getEmail());
 
-        if (registeredAccount == null) {
-          return account.getEmail();
-        }
-
+    if (username != null) {
       throw new InvalidRegistrationException("This email has already been taken");
     }
 
-    public String login(AccountVO accountVO) throws InvalidLoginException {
+    accountRepository.save(account);
 
-      Account account = accountRepository.findOne(accountVO.getEmail());
+    return account.getEmail();
+  }
 
-        if (account == null || !account.getPassword().equals(accountVO.getPassword())) {
-            throw new InvalidLoginException("No valid combination of email and password");
-        }
-        return account.getEmail();
+  public String login(AccountVO accountVO) throws InvalidLoginException {
+
+    Account account = accountRepository.findAccountByEmail(accountVO.getEmail());
+
+    if (account == null || !accountVO.getPassword().equals(account.getPassword())) {
+      throw new InvalidLoginException("No valid combination of email and password");
     }
+    return account.getEmail();
+  }
 }
