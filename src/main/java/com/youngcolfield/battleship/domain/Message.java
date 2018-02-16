@@ -3,7 +3,7 @@ package com.youngcolfield.battleship.domain;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -20,5 +20,5 @@ public class Message {
     private Account receiver;
 
     private String message;
-    private Date date;
+    private LocalDateTime date;
 }
