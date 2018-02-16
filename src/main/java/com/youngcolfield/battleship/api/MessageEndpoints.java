@@ -1,9 +1,11 @@
 package com.youngcolfield.battleship.api;
 
+import com.youngcolfield.battleship.controller.MessageRepository;
 import com.youngcolfield.battleship.controller.MessageService;
-import com.youngcolfield.battleship.domain.Message;
+import com.youngcolfield.battleship.misc.ChatVO;
 import com.youngcolfield.battleship.misc.MessageVO;
 import com.youngcolfield.battleship.misc.StatusVO;
+import com.youngcolfield.battleship.misc.SimpleMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,9 +14,9 @@ import org.springframework.stereotype.Component;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -23,6 +25,9 @@ public class MessageEndpoints {
 
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    private MessageRepository messageRepository;
 
     @Path("/send")
     @POST
@@ -38,11 +43,16 @@ public class MessageEndpoints {
     }
 
     @Path("/receive")
-    @GET
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response receiveMessages() {
-        Iterable<Message> listMessages = messageService.receiveMessage();
-        return Response.ok(listMessages).build();
+    public Response receiveMessages(ChatVO chatVO) {
+//        List<SimpleMessage> simpleMessageList = messageService.receiveMessage(chatVO);
+
+        System.out.println(chatVO.getReceiverId());
+
+        messageRepository.findReceivedMessagesByEmail(chatVO.getReceiverId());
+
+        return Response.ok().build();
     }
 }

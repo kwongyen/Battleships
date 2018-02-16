@@ -2,15 +2,16 @@ package com.youngcolfield.battleship.controller;
 
 import com.youngcolfield.battleship.domain.Message;
 import com.youngcolfield.battleship.exceptions.InvalidMessageException;
+import com.youngcolfield.battleship.misc.ChatVO;
 import com.youngcolfield.battleship.misc.MessageVO;
+import com.youngcolfield.battleship.misc.SimpleMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.util.calendar.BaseCalendar;
-import sun.util.calendar.LocalGregorianCalendar;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -33,12 +34,33 @@ public class MessageService {
         message.setMessage(messageVO.getMessage());
         message.setReceiver(accountRepository.findAccountByEmail(messageVO.getReceiver()));
         message.setSender(accountRepository.findAccountByEmail(messageVO.getSender()));
+        message.setDate(LocalDateTime.now());
 
         messageRepository.save(message);
     }
 
-    public Iterable<Message> receiveMessage(){
-        return messageRepository.findAll();
+    public ArrayList<SimpleMessage> receiveMessage(ChatVO chatVO) {
+//        return messageRepository.findAll();
+//        List<Message> messageList = messageRepository.findSentMessagesByEmail(chatVO.getReceiverId(), chatVO.getSenderId());
+//
+//        ArrayList<SimpleMessage> simpleMessageArrayList = new ArrayList<>();
+//
+//        for (Message m : messageList){
+//            try{
+//                SimpleMessage simpleMessage = new SimpleMessage();
+//                simpleMessage.setDate(m.getDate());
+//                simpleMessage.setMessage(m.getMessage());
+//            } catch (Exception e) {
+//            }
+//        }
+//        return simpleMessageArrayList;
+//    }
+
+      System.out.println(chatVO.getReceiverId());
+
+      messageRepository.findReceivedMessagesByEmail(chatVO.getReceiverId());
+
+      return new ArrayList<>();
     }
 
 }
