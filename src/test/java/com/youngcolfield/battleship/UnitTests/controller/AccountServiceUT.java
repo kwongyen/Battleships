@@ -97,7 +97,7 @@ public class AccountServiceUT {
     account.setPassword(testPassword);
     account.setEmail(testEmail);
 
-    when(accountRepository.findOne(any(String.class))).thenReturn(account);
+    when(accountRepository.findOne(any(Long.class))).thenReturn(account);
 
     String email;
 
