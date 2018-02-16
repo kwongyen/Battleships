@@ -49,7 +49,7 @@ public class AccountEndpoints {
             accountLoginId.setId(accountService.login(accountVO));
             return Response.ok(accountLoginId).build();
         } catch (Exception e) {
-            return Response.status(HttpStatus.FORBIDDEN.value()).entity(StatusVO.EMPTY).build();
+            return Response.status(HttpStatus.FORBIDDEN.value()).entity(new StatusVO(e.toString())).build();
         }
     }
 

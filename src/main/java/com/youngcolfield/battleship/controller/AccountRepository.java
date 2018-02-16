@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface AccountRepository extends CrudRepository<Account, String> {
+public interface AccountRepository extends CrudRepository<Account, Long> {
 
     @Query("select a.username from Account a where a.email = :id")
     String findUsernameByEmail(@Param("id") String id);

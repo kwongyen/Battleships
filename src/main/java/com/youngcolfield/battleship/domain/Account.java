@@ -8,6 +8,8 @@ import javax.persistence.*;
 @Entity
 public class Account {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     private String email;
 
     @OneToOne
@@ -19,7 +21,4 @@ public class Account {
 
     private int type;
     private String bio;
-
-
-
 }
