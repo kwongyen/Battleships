@@ -15,6 +15,7 @@ public class JerseyConfig extends ResourceConfig {
     register(MessageEndpoints.class);
   }
 
+
   @Bean(name="AccountService")
   public AccountService getAccountService() {
     return new AccountService();
