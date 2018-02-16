@@ -19,5 +19,5 @@ public class Friend {
     private Account friend;
 
     private LocalDateTime friendsince;
-    private int playedagainst;
+    private int playedgames;
 }
