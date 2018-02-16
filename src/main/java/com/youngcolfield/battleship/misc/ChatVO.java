@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ChatVO {
-  private Long receiverId;
-  private Long senderId;
+  private String receiverId;
+  private String senderId;
 }

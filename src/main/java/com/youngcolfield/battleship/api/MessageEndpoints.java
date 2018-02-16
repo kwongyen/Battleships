@@ -1,6 +1,5 @@
 package com.youngcolfield.battleship.api;
 
-import com.youngcolfield.battleship.controller.MessageRepository;
 import com.youngcolfield.battleship.controller.MessageService;
 import com.youngcolfield.battleship.misc.ChatVO;
 import com.youngcolfield.battleship.misc.MessageVO;
@@ -26,9 +25,6 @@ public class MessageEndpoints {
     @Autowired
     private MessageService messageService;
 
-    @Autowired
-    private MessageRepository messageRepository;
-
     @Path("/send")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -47,12 +43,8 @@ public class MessageEndpoints {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response receiveMessages(ChatVO chatVO) {
-//        List<SimpleMessage> simpleMessageList = messageService.receiveMessage(chatVO);
+        List<SimpleMessage> simpleMessageList = messageService.receiveMessage(chatVO);
 
-        System.out.println(chatVO.getReceiverId());
-
-        messageRepository.findReceivedMessagesByEmail(chatVO.getReceiverId());
-
-        return Response.ok().build();
+        return Response.ok(simpleMessageList).build();
     }
 }

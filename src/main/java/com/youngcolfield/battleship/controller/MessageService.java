@@ -40,27 +40,18 @@ public class MessageService {
     }
 
     public ArrayList<SimpleMessage> receiveMessage(ChatVO chatVO) {
-//        return messageRepository.findAll();
-//        List<Message> messageList = messageRepository.findSentMessagesByEmail(chatVO.getReceiverId(), chatVO.getSenderId());
-//
-//        ArrayList<SimpleMessage> simpleMessageArrayList = new ArrayList<>();
-//
-//        for (Message m : messageList){
-//            try{
-//                SimpleMessage simpleMessage = new SimpleMessage();
-//                simpleMessage.setDate(m.getDate());
-//                simpleMessage.setMessage(m.getMessage());
-//            } catch (Exception e) {
-//            }
-//        }
-//        return simpleMessageArrayList;
-//    }
+        List<Message> messageList = messageRepository.findSentMessagesByEmail(accountRepository.findAccountByEmail(chatVO.getReceiverId()), accountRepository.findAccountByEmail(chatVO.getSenderId()));
 
-      System.out.println(chatVO.getReceiverId());
+        ArrayList<SimpleMessage> simpleMessageArrayList = new ArrayList<>();
 
-      messageRepository.findReceivedMessagesByEmail(chatVO.getReceiverId());
+        for (Message m : messageList){
+          SimpleMessage simpleMessage = new SimpleMessage();
+          simpleMessage.setDate(m.getDate());
+          simpleMessage.setMessage(m.getMessage());
 
-      return new ArrayList<>();
+          simpleMessageArrayList.add(simpleMessage);
+
+        }
+        return simpleMessageArrayList;
     }
-
 }
