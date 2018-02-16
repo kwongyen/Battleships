@@ -43,7 +43,6 @@ public class AccountEndpoints {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response loginAccount(@Valid @NotNull AccountVO accountVO) {
-
         try{
             AccountLoginId accountLoginId = new AccountLoginId();
             accountLoginId.setId(accountService.login(accountVO));
