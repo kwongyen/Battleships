@@ -3,6 +3,7 @@ package com.youngcolfield.battleship.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -17,6 +18,6 @@ public class Friend {
     @ManyToOne
     private Account friend;
 
-    private Date friendsince;
-    private int playedagainst;
+    private LocalDateTime friendsince;
+    private int playedgames;
 }

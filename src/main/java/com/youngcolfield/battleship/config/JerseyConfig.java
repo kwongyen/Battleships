@@ -1,6 +1,7 @@
 package com.youngcolfield.battleship.config;
 
 import com.youngcolfield.battleship.api.AccountEndpoints;
+import com.youngcolfield.battleship.api.FriendEndpoints;
 import com.youngcolfield.battleship.api.MessageEndpoints;
 import com.youngcolfield.battleship.controller.AccountRepository;
 import com.youngcolfield.battleship.controller.AccountService;
@@ -13,7 +14,8 @@ public class JerseyConfig extends ResourceConfig {
   public JerseyConfig() {
     register(AccountEndpoints.class);
     register(MessageEndpoints.class);
-  }
+    register(FriendEndpoints.class);
+;  }
 
 
   @Bean(name="AccountService")
