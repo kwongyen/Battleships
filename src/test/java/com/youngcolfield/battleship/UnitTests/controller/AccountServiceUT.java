@@ -94,8 +94,8 @@ public class AccountServiceUT {
     accountVO.setPassword(testPassword);
 
     Account account = new Account();
-    account.setPassword(testPassword);
     account.setEmail(testEmail);
+    account.setPassword(testPassword);
 
     when(accountRepository.findOne(any(Long.class))).thenReturn(account);
 
