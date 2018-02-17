@@ -37,7 +37,6 @@ public class MessageService {
 
         message.setDate(LocalDateTime.now());
 
-
         messageRepository.save(message);
     }
 
