@@ -23,8 +23,6 @@ public class FriendService {
     public void addFriend(FriendVO friendVO) throws InvalidFriendException{
         List<Friend> friendList = friendRepository.findFriendsById(accountRepository.findAccountByUsername(friendVO.getUser()));
         for(Friend f : friendList) {
-            System.out.println(f.getFriend().toString());
-            System.out.println(friendVO.getFriend().toString());
             if (f.getFriend().getUsername().equals(friendVO.getFriend())) {
                 throw new InvalidFriendException("This person is already your friend");
             }
