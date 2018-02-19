@@ -48,12 +48,8 @@ public class MessageService {
         ArrayList<SimpleMessage> simpleMessageArrayList = new ArrayList<>();
 
         for (Message m : messageList){
-          SimpleMessage simpleMessage = new SimpleMessage();
-          simpleMessage.setDate(m.getDate());
-          simpleMessage.setMessage(m.getMessage());
-
+          SimpleMessage simpleMessage = new SimpleMessage(m);
           simpleMessageArrayList.add(simpleMessage);
-
         }
         return simpleMessageArrayList;
     }

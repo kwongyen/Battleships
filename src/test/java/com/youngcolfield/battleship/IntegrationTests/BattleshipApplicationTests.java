@@ -1,4 +1,4 @@
-package com.youngcolfield.battleship;
+package com.youngcolfield.battleship.IntegrationTests;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
