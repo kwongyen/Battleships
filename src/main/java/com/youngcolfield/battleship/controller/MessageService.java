@@ -23,14 +23,13 @@ public class MessageService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public Message sendMessage(MessageVO messageVO) throws InvalidMessageException{
-
-        Message message = new Message();
+    public void sendMessage(MessageVO messageVO) throws InvalidMessageException{
 
         if (accountRepository.findAccountByEmail(messageVO.getReceiver()) == null || accountRepository.findAccountByEmail(messageVO.getSender()) == null) {
             throw new InvalidMessageException("Either receiver or sender is not a known user");
         }
 
+        Message message = new Message();
         message.setMessage(messageVO.getMessage());
         message.setReceiver(accountRepository.findAccountByEmail(messageVO.getReceiver()));
         message.setSender(accountRepository.findAccountByEmail(messageVO.getSender()));
@@ -38,8 +37,6 @@ public class MessageService {
         message.setDate(LocalDateTime.now());
 
         messageRepository.save(message);
-
-        return message;
     }
 
     public ArrayList<SimpleMessage> receiveMessage(ChatVO chatVO) {
