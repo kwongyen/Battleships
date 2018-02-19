@@ -5,6 +5,7 @@ import com.youngcolfield.battleship.api.MessageEndpoints;
 import com.youngcolfield.battleship.controller.AccountService;
 import com.youngcolfield.battleship.controller.MessageService;
 import com.youngcolfield.battleship.domain.Message;
+import com.youngcolfield.battleship.exceptions.InvalidMessageException;
 import com.youngcolfield.battleship.misc.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -37,14 +39,9 @@ public class MessageEndpointsUT {
         Message testMessage = new Message();
         testMessage.setMessage("hello");
 
-        try {
-            when(messageService.sendMessage(messageVO)).thenReturn(testMessage);
-        } catch (Exception e){
-            fail();
-        }
         Response response = messageEndpoints.sendMessage(messageVO);
 
-        assertEquals(202, response.getStatus());
+        assertEquals(200, response.getStatus());
 
     }
 
@@ -59,7 +56,6 @@ public class MessageEndpointsUT {
 
         try {
             when(messageService.receiveMessage(chatVO)).thenReturn(simpleMessageArrayList);
-
         } catch (Exception e){
             fail();
         }

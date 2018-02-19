@@ -8,6 +8,7 @@ import com.youngcolfield.battleship.misc.AccountVO;
 import com.youngcolfield.battleship.misc.RegisterVO;
 import org.hibernate.boot.spi.InFlightMetadataCollector;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
