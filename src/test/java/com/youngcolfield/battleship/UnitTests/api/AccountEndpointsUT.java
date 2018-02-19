@@ -40,7 +40,7 @@ public class AccountEndpointsUT {
     }
     Response response = accountEndpoints.register(registerVO);
 
-    assertEquals(202, response.getStatus());
+    assertEquals(200, response.getStatus());
   }
 
   @Test

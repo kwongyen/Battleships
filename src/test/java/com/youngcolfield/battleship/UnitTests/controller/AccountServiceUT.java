@@ -42,16 +42,13 @@ public class AccountServiceUT {
     registerVO.setPassword(testPassword);
     registerVO.setUsername("bloebla");
 
-    when(accountRepository.save(any(Account.class))).thenReturn(null);
+    when(accountRepository.findUsernameByEmail(any(String.class))).thenReturn(null);
 
     String answer;
 
     try {
       answer = accountService.register(registerVO);
     } catch (Exception e) {
-
-      System.out.println(e);
-
       fail();
       return;
     }
@@ -59,6 +56,7 @@ public class AccountServiceUT {
     assertEquals(testEmail, answer);
   }
 
+  @Test
   public void testRegister500(){
 
     String testEmail = "bla@bla.nl";
@@ -72,7 +70,7 @@ public class AccountServiceUT {
     Account account = new Account();
     account.setEmail(testEmail);
 
-    when(accountRepository.save(any(Account.class))).thenReturn(account);
+    when(accountRepository.findUsernameByEmail(any(String.class))).thenReturn(testEmail);
 
     try {
       accountService.register(registerVO);
@@ -97,7 +95,7 @@ public class AccountServiceUT {
     account.setEmail(testEmail);
     account.setPassword(testPassword);
 
-    when(accountRepository.findOne(any(Long.class))).thenReturn(account);
+    when(accountRepository.findAccountByEmail(any(String.class))).thenReturn(account);
 
     String email;
 

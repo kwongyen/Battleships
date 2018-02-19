@@ -43,9 +43,8 @@ public class MessageEndpoints {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response receiveMessages(ChatVO chatVO) {
+    public Response receiveMessages(@Valid @NotNull ChatVO chatVO) {
         List<SimpleMessage> simpleMessageList = messageService.receiveMessage(chatVO);
-
         return Response.ok(simpleMessageList).build();
     }
 }

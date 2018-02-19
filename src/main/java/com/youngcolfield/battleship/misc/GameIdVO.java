@@ -5,9 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class ChatVO {
+public class GameIdVO {
   @NotNull
-  private String receiverId;
-  @NotNull
-  private String senderId;
+  private Long gameId;
 }
