@@ -1,6 +1,7 @@
 package com.youngcolfield.battleship.controller;
 
 import com.youngcolfield.battleship.domain.Account;
+import com.youngcolfield.battleship.domain.Stats;
 import com.youngcolfield.battleship.exceptions.InvalidLoginException;
 import com.youngcolfield.battleship.exceptions.InvalidRegistrationException;
 import com.youngcolfield.battleship.misc.RegisterVO;

@@ -23,7 +23,7 @@ public class MessageService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public void sendMessage(MessageVO messageVO) throws InvalidMessageException{
+    public Message sendMessage(MessageVO messageVO) throws InvalidMessageException{
 
         Message message = new Message();
 
@@ -34,9 +34,12 @@ public class MessageService {
         message.setMessage(messageVO.getMessage());
         message.setReceiver(accountRepository.findAccountByEmail(messageVO.getReceiver()));
         message.setSender(accountRepository.findAccountByEmail(messageVO.getSender()));
+
         message.setDate(LocalDateTime.now());
 
         messageRepository.save(message);
+
+        return message;
     }
 
     public ArrayList<SimpleMessage> receiveMessage(ChatVO chatVO) {
