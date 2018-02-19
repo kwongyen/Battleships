@@ -28,9 +28,13 @@ public class AccountService {
     account.setType(1);
 
     String username = accountRepository.findUsernameByEmail(registerVO.getEmail());
+    String email = accountRepository.findEmailByUsername(registerVO.getUsername());
 
     if (username != null) {
       throw new InvalidRegistrationException("This email has already been taken");
+    }
+    if (email != null) {
+      throw new InvalidRegistrationException("This username has already been taken");
     }
 
     accountRepository.save(account);

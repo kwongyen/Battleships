@@ -46,4 +46,17 @@ public class FriendEndpoints {
 
         return Response.ok(simpleFriendList).build();
     }
+
+    @Path("/delete")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteFriend(@Valid @NotNull FriendVO friendVO){
+        try {
+            friendService.deleteFriend(friendVO);
+        }catch(Exception e){
+            return Response.status(HttpStatus.BAD_REQUEST.value()).entity(new StatusVO(e.toString())).build();
+        }
+        return Response.ok().build();
+    }
 }

@@ -46,4 +46,13 @@ public class FriendService {
        }
        return simpleFriendArrayList;
     }
+
+    public void deleteFriend(FriendVO friendVO) throws InvalidFriendException{
+        Friend friend = friendRepository.findFriendByUserAndFriend(accountRepository.findAccountByUsername(friendVO.getUser()),accountRepository.findAccountByUsername(friendVO.getFriend()));
+        if(friend == null){
+            throw new InvalidFriendException("This person is not in your friend list");
+        }else {
+            friendRepository.delete(friend);
+        }
+    }
 }
