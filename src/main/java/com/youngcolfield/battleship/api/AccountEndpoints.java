@@ -32,7 +32,7 @@ public class AccountEndpoints {
         try {
             AccountLoginId accountLoginId = new AccountLoginId();
             accountLoginId.setId(accountService.register(registerVO));
-            return Response.accepted(accountLoginId).build();
+            return Response.ok().build();
         } catch (Exception e) {
             return Response.status(HttpStatus.BAD_REQUEST.value()).entity(new StatusVO(e.toString())).build();
         }
@@ -43,11 +43,10 @@ public class AccountEndpoints {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response loginAccount(@Valid @NotNull AccountVO accountVO) {
-
         try{
             AccountLoginId accountLoginId = new AccountLoginId();
             accountLoginId.setId(accountService.login(accountVO));
-            return Response.ok(accountLoginId).build();
+            return Response.ok().build();
         } catch (Exception e) {
             return Response.status(HttpStatus.FORBIDDEN.value()).entity(new StatusVO(e.toString())).build();
         }

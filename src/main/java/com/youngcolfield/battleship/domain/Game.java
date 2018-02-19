@@ -16,6 +16,11 @@ public class Game {
     @ManyToOne
     private Account playertwo;
 
+    private String currentPlayer;
+
+    @OneToOne
+    private BoterKaasEieren boterKaasEieren;
+
     private String winner;
     private long playtime;
 

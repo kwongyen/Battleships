@@ -18,6 +18,10 @@ public class AccountService {
   @Autowired
   private AccountRepository accountRepository;
 
+  public Account getAccount(String accountId){
+    return accountRepository.findAccountByEmail(accountId);
+  }
+
   public String register(RegisterVO registerVO) throws InvalidRegistrationException {
 
     Account account = new Account();
