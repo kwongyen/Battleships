@@ -51,7 +51,7 @@ public class GameEndpoints {
     return Response.ok().build();
   }
 
-  @Path("/turn")
+  @Path("/show")
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
