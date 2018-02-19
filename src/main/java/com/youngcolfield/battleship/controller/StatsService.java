@@ -1,0 +1,34 @@
+package com.youngcolfield.battleship.controller;
+
+import com.youngcolfield.battleship.domain.Stats;
+import com.youngcolfield.battleship.misc.StatsVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@Transactional
+public class StatsService {
+
+    @Autowired
+    private StatsRepository statsRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
+
+    public List<Stats> sortByWins(){
+        return statsRepository.sortByWins();
+    }
+
+    public List<Stats> sortByWinsLosses(){
+        return statsRepository.sortByWinsLosses();
+    }
+
+    public Stats getRankUser(StatsVO statsVO){
+        Stats statsUser = accountRepository.findStatsidByUsername(statsVO.getUsername());
+        return statsRepository.getRankUser(statsUser.getId());
+    }
+
+}
