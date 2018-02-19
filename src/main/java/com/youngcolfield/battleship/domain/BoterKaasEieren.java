@@ -13,4 +13,6 @@ public class BoterKaasEieren {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+
+  private String cells;
 }

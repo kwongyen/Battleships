@@ -1,10 +1,8 @@
 package com.youngcolfield.battleship.config;
 
-import com.youngcolfield.battleship.api.AccountEndpoints;
-import com.youngcolfield.battleship.api.FriendEndpoints;
-import com.youngcolfield.battleship.api.GameEndpoints;
-import com.youngcolfield.battleship.api.MessageEndpoints;
+import com.youngcolfield.battleship.api.*;
 import com.youngcolfield.battleship.controller.AccountService;
+import com.youngcolfield.battleship.domain.BoterKaasEieren;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Bean;
 
@@ -16,6 +14,7 @@ public class JerseyConfig extends ResourceConfig {
     register(MessageEndpoints.class);
     register(FriendEndpoints.class);
     register(GameEndpoints.class);
+    register(BoterKaasEierenEndpoints.class);
   }
 
 
