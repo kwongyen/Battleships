@@ -12,4 +12,7 @@ public interface FriendRepository extends CrudRepository<Friend, Long> {
 
     @Query("select f from Friend f where f.user = :id")
     List<Friend> findFriendsById(@Param("id")Account id);
+
+    @Query("select f from Friend f where f.user = :userId and f.friend = :friendId")
+    Friend findFriendByUserAndFriend(@Param("userId")Account userId, @Param("friendId")Account friendId);
 }

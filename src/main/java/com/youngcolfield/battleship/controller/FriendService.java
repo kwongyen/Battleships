@@ -1,6 +1,7 @@
 package com.youngcolfield.battleship.controller;
 
 import com.youngcolfield.battleship.domain.Friend;
+import com.youngcolfield.battleship.exceptions.InvalidFriendException;
 import com.youngcolfield.battleship.misc.FriendVO;
 import com.youngcolfield.battleship.misc.SimpleFriend;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,13 @@ public class FriendService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public void addFriend(FriendVO friendVO){
+    public void addFriend(FriendVO friendVO) throws InvalidFriendException{
+        List<Friend> friendList = friendRepository.findFriendsById(accountRepository.findAccountByUsername(friendVO.getUser()));
+        for(Friend f : friendList) {
+            if (f.getFriend().getUsername().equals(friendVO.getFriend())) {
+                throw new InvalidFriendException("This person is already your friend");
+            }
+        }
         Friend friend = new Friend();
         friend.setUser(accountRepository.findAccountByUsername(friendVO.getUser()));
         friend.setFriend(accountRepository.findAccountByUsername(friendVO.getFriend()));
@@ -29,7 +36,6 @@ public class FriendService {
     public ArrayList<SimpleFriend> getFriendList(FriendVO friendVO){
        List<Friend> friendList = friendRepository.findFriendsById(accountRepository.findAccountByUsername(friendVO.getUser()));
        ArrayList<SimpleFriend> simpleFriendArrayList = new ArrayList<SimpleFriend>();
-
        for(Friend f : friendList){
            SimpleFriend simpleFriend = new SimpleFriend();
            simpleFriend.setFriendname((f.getFriend()).getUsername());
@@ -39,5 +45,14 @@ public class FriendService {
            simpleFriendArrayList.add(simpleFriend);
        }
        return simpleFriendArrayList;
+    }
+
+    public void deleteFriend(FriendVO friendVO) throws InvalidFriendException{
+        Friend friend = friendRepository.findFriendByUserAndFriend(accountRepository.findAccountByUsername(friendVO.getUser()),accountRepository.findAccountByUsername(friendVO.getFriend()));
+        if(friend == null){
+            throw new InvalidFriendException("This person is not in your friend list");
+        }else {
+            friendRepository.delete(friend);
+        }
     }
 }
