@@ -18,6 +18,14 @@ public class StatsService {
     @Autowired
     private AccountRepository accountRepository;
 
+    public Stats createStats(){
+        Stats stat = new Stats();
+        stat.setWins(0);
+        stat.setLosses(0);
+        statsRepository.save(stat);
+        return stat;
+    }
+
     public List<Stats> sortByWins(){
         return statsRepository.sortByWins();
     }

@@ -1,6 +1,7 @@
 package com.youngcolfield.battleship.controller;
 
 import com.youngcolfield.battleship.domain.Account;
+import com.youngcolfield.battleship.domain.Stats;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,9 @@ public class DatabaseService {
 
     @Autowired
     private DatabaseRepository databaseRepository;
+
+    @Autowired
+    private StatsService statsService;
 
     public void fillDatabaseWithAccounts(){
         for(int i=1; i<=5; i++){
@@ -28,30 +32,35 @@ public class DatabaseService {
                 a.setUsername("mock");
                 a.setPassword("bestpassword");
                 a.setCountry("Netherlands");
+                a.setStatsid(statsService.createStats());
                 break;
             case 2:
                 a.setEmail("jasper@email.com");
                 a.setUsername("jasper");
                 a.setPassword("password");
                 a.setCountry("Netherlands");
+                a.setStatsid(statsService.createStats());
                 break;
             case 3:
                 a.setEmail("daniel@email.com");
                 a.setUsername("daniel");
                 a.setPassword("best");
                 a.setCountry("Scotland");
+                a.setStatsid(statsService.createStats());
                 break;
             case 4:
                 a.setEmail("kwong@email.com");
                 a.setUsername("kwong");
                 a.setPassword("pw1234");
                 a.setCountry("Netherlands");
+                a.setStatsid(statsService.createStats());
                 break;
             case 5:
                 a.setEmail("claudio@email.com");
                 a.setUsername("claudio");
                 a.setPassword("pompkasteel");
                 a.setCountry("Netherlands");
+                a.setStatsid(statsService.createStats());
                 break;
         }
 
