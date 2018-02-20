@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class DatabaseService {
 
     @Autowired
+    private StatsRepository statsRepository;
+
+    @Autowired
     private DatabaseRepository databaseRepository;
 
     @Autowired
@@ -24,7 +27,7 @@ public class DatabaseService {
     }
 
     public Account createAccount(int i){
-
+        Stats stats = new Stats();
         Account a = new Account();
         switch (i){
             case 1:
@@ -32,35 +35,49 @@ public class DatabaseService {
                 a.setUsername("mock");
                 a.setPassword("bestpassword");
                 a.setCountry("Netherlands");
-                a.setStatsid(statsService.createStats());
+
+                stats.setLosses(0);
+                stats.setWins(3);
+                a.setStatsid(statsRepository.save(stats));
                 break;
             case 2:
                 a.setEmail("jasper@email.com");
                 a.setUsername("jasper");
                 a.setPassword("password");
                 a.setCountry("Netherlands");
-                a.setStatsid(statsService.createStats());
+
+                stats.setLosses(4);
+                stats.setWins(10);
+                a.setStatsid(statsRepository.save(stats));
                 break;
             case 3:
                 a.setEmail("daniel@email.com");
                 a.setUsername("daniel");
                 a.setPassword("best");
                 a.setCountry("Scotland");
-                a.setStatsid(statsService.createStats());
+
+                stats.setLosses(10);
+                stats.setWins(22);
+                a.setStatsid(statsRepository.save(stats));
                 break;
             case 4:
                 a.setEmail("kwong@email.com");
                 a.setUsername("kwong");
                 a.setPassword("pw1234");
                 a.setCountry("Netherlands");
-                a.setStatsid(statsService.createStats());
+
+                stats.setLosses(1);
+                stats.setWins(7);
+                a.setStatsid(statsRepository.save(stats));
                 break;
             case 5:
                 a.setEmail("claudio@email.com");
                 a.setUsername("claudio");
                 a.setPassword("pompkasteel");
                 a.setCountry("Netherlands");
-                a.setStatsid(statsService.createStats());
+                stats.setLosses(9);
+                stats.setWins(9);
+                a.setStatsid(statsRepository.save(stats));
                 break;
         }
 
