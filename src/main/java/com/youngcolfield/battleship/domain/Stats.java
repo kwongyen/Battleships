@@ -14,4 +14,5 @@ public class Stats {
     private int wins;
     private int losses;
     private long playtime;
+    private String country;
 }
