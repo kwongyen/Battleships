@@ -31,4 +31,5 @@ public class StatsService {
         return statsRepository.getRankUser(statsUser.getId());
     }
 
+
 }

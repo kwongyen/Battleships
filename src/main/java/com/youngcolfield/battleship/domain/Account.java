@@ -21,4 +21,5 @@ public class Account {
 
     private int type;
     private String bio;
+
 }
