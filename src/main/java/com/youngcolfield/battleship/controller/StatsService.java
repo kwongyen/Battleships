@@ -22,8 +22,8 @@ public class StatsService {
         return statsRepository.sortByWins();
     }
 
-    public List<Stats> sortByWinsLosses(){
-        return statsRepository.sortByWinsLosses();
+    public List<Stats> sortByWinRatio(){
+        return statsRepository.sortByWinRatio();
     }
 
     public Stats getRankUser(StatsVO statsVO){

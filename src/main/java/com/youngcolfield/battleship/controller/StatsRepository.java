@@ -14,8 +14,8 @@ public interface StatsRepository extends CrudRepository<Stats, Long> {
     @Query("select s from Stats s order by s.wins desc")
     List<Stats> sortByWins();
 
-    @Query("select s from Stats s order by s.wins/s.losses desc")
-    List<Stats> sortByWinsLosses();
+    @Query("select s from Stats s order by s.wins/(s.wins + s.losses) desc")
+    List<Stats> sortByWinRatio();
 
     @Query("select s from Stats s where s.id = :id")
     Stats getRankUser(@Param("id") long id);

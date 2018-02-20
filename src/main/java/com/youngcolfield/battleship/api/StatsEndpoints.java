@@ -33,8 +33,8 @@ public class StatsEndpoints {
     @Path("/sortByWinsLosses")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response sortByWinsLosses(){
-        List<Stats> ranking = statsService.sortByWinsLosses();
+    public Response sortByWinRatio(){
+        List<Stats> ranking = statsService.sortByWinRatio();
         return Response.ok(ranking).build();
     }
 
