@@ -15,6 +15,7 @@ public class JerseyConfig extends ResourceConfig {
     register(StatsEndpoints.class);
     register(GameEndpoints.class);
     register(BoterKaasEierenEndpoints.class);
+    register(DatabaseEndpoints.class);
   }
 
 

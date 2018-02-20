@@ -7,5 +7,5 @@ import javax.validation.constraints.NotNull;
 @Data
 public class GameVO {
   @NotNull
-  private String playerOneId;
+  private String playerId;
 }

@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 
 @Slf4j
 @Component
-@Path("/Game")
+@Path("/game")
 public class GameEndpoints {
 
   @Autowired
@@ -58,7 +58,7 @@ public class GameEndpoints {
   public Response showGame(GameIdVO gameIdVO){
     ShowGame showGame;
     try {
-      showGame = gameService.showGame(gameIdVO.getGameId());
+      showGame = gameService.showGame(gameIdVO);
     } catch (Exception e) {
       return Response.status(400).entity(new StatusVO(e.toString())).build();
     }
