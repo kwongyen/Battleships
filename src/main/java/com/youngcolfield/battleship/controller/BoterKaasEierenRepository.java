@@ -8,5 +8,5 @@ import org.springframework.data.repository.query.Param;
 public interface BoterKaasEierenRepository extends CrudRepository<BoterKaasEieren, Long>{
 
     @Query("select b from BoterKaasEieren b where b.id = :id")
-    BoterKaasEieren getBoterKaasEierensById(@Param("id") BoterKaasEieren id);
+    BoterKaasEieren getBoterKaasEierensById(@Param("id") Long id);
 }

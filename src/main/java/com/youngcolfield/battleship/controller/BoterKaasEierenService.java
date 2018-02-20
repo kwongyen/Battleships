@@ -11,13 +11,15 @@ public class BoterKaasEierenService {
     @Autowired
     private BoterKaasEierenRepository boterKaasEierenRepository;
 
-    public void createBoterKaasEieren(){
+    public BoterKaasEieren createBoterKaasEieren(){
         BoterKaasEieren bke = new BoterKaasEieren();
         bke.setCells("000000000");
         boterKaasEierenRepository.save(bke);
+        return bke;
     }
 
-//    public String getBoterKaasEieren(){
-//        return boterKaasEierenRepository.getBoterKaasEierensById()
-//    }
+    public void updateCellsById(Long id, String cells){
+        BoterKaasEieren bke = boterKaasEierenRepository.getBoterKaasEierensById(id);
+        bke.setCells(cells);
+    }
 }
