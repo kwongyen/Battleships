@@ -28,7 +28,7 @@ public class FriendEndpoints {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addFriend(@Valid @NotNull FriendVO friendVO){
+    public Response addFriend(@Valid FriendVO friendVO){
         try {
             friendService.addFriend(friendVO);
         }catch(Exception e){
@@ -41,7 +41,7 @@ public class FriendEndpoints {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getFriendList(@Valid @NotNull FriendVO friendVO){
+    public Response getFriendList(@Valid FriendVO friendVO){
         List<SimpleFriend> simpleFriendList = friendService.getFriendList(friendVO);
 
         return Response.ok(simpleFriendList).build();
