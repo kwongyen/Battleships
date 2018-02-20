@@ -13,7 +13,7 @@ import com.youngcolfield.battleship.misc.AccountVO;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @Transactional
@@ -76,8 +76,10 @@ public class AccountService {
       int loss = stat.getLosses();
       simpleAccount.setWins(win);
       simpleAccount.setLosses(loss);
-      if((win+loss != 0)) {
-        simpleAccount.setWinratio(win / (win + loss));
+      if((win+loss) != 0) {
+        double ratio = (double) win/( (double) win+(double) loss);
+        ratio = Math.round(ratio * 100.0) / 100.0;
+        simpleAccount.setWinratio(ratio);
       }else{
         simpleAccount.setWinratio(0);
       }
