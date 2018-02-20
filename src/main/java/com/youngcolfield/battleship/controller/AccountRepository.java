@@ -7,6 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public interface AccountRepository extends CrudRepository<Account, Long> {
 
@@ -27,5 +29,8 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
 
     @Query("select a from Account a where a.username = :id")
     Account findAccountByUsername(@Param("id") String id);
+
+    @Query("select a from Account a")
+    List<Account> findAllAccounts();
 
 }

@@ -5,11 +5,14 @@ import com.youngcolfield.battleship.domain.Stats;
 import com.youngcolfield.battleship.exceptions.InvalidLoginException;
 import com.youngcolfield.battleship.exceptions.InvalidRegistrationException;
 import com.youngcolfield.battleship.misc.RegisterVO;
+import com.youngcolfield.battleship.misc.SimpleAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.youngcolfield.battleship.misc.AccountVO;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +21,9 @@ public class AccountService {
 
   @Autowired
   private AccountRepository accountRepository;
+
+  @Autowired
+  private StatsRepository statsRepository;
 
   public Account getAccount(String accountId){
     return accountRepository.findAccountByEmail(accountId);
@@ -56,4 +62,28 @@ public class AccountService {
     }
     return account.getEmail();
   }
+
+  public ArrayList<SimpleAccount> getAccounts(){
+    List<Account> accounts = accountRepository.findAllAccounts();
+    ArrayList<SimpleAccount> simpleAccountList = new ArrayList<>();
+    for(Account a : accounts){
+      SimpleAccount simpleAccount = new SimpleAccount();
+      simpleAccount.setUsername(a.getUsername());
+      simpleAccount.setCountry(a.getCountry());
+
+      Stats stat = statsRepository.getRankUser(a.getId());
+      int win = stat.getWins();
+      int loss = stat.getLosses();
+      simpleAccount.setWins(win);
+      simpleAccount.setLosses(loss);
+      if((win+loss != 0)) {
+        simpleAccount.setWinratio(win / (win + loss));
+      }else{
+        simpleAccount.setWinratio(0);
+      }
+      simpleAccountList.add(simpleAccount);
+    }
+    return simpleAccountList;
+  }
+
 }
