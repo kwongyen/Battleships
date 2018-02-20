@@ -1,7 +1,6 @@
 package com.youngcolfield.battleship.api;
 
 import com.youngcolfield.battleship.controller.MessageService;
-import com.youngcolfield.battleship.domain.Message;
 import com.youngcolfield.battleship.misc.ChatVO;
 import com.youngcolfield.battleship.misc.MessageVO;
 import com.youngcolfield.battleship.misc.StatusVO;
@@ -32,19 +31,20 @@ public class MessageEndpoints {
     @Produces(MediaType.APPLICATION_JSON)
     public Response sendMessage(@Valid @NotNull MessageVO messageVO) {
         try {
-            Message message = messageService.sendMessage(messageVO);
-            return Response.ok(message).build();
+            messageService.sendMessage(messageVO);
         } catch (Exception e) {
             return Response.status(HttpStatus.BAD_REQUEST.value()).entity(new StatusVO(e.toString())).build();
         }
+        return Response.ok().build();
     }
 
     @Path("/receive")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response receiveMessages(@Valid @NotNull ChatVO chatVO) {
+    public Response receiveMessages(ChatVO chatVO) {
         List<SimpleMessage> simpleMessageList = messageService.receiveMessage(chatVO);
+
         return Response.ok(simpleMessageList).build();
     }
 }
