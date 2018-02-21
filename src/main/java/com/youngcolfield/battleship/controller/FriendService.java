@@ -21,20 +21,27 @@ public class FriendService {
     private AccountRepository accountRepository;
 
     public void addFriend(FriendVO friendVO) throws InvalidFriendException{
-        List<Friend> friendList = friendRepository.findFriendsById(accountRepository.findAccountByUsername(friendVO.getUser()));
+        List<Friend> friendList = friendRepository.findFriendsById(accountRepository.findAccountByEmail(friendVO.getUser()));
         for(Friend f : friendList) {
             if (f.getFriend().getUsername().equals(friendVO.getFriend())) {
                 throw new InvalidFriendException("This person is already your friend");
             }
         }
         Friend friend = new Friend();
-        friend.setUser(accountRepository.findAccountByUsername(friendVO.getUser()));
-        friend.setFriend(accountRepository.findAccountByUsername(friendVO.getFriend()));
+        friend.setUser(accountRepository.findAccountByEmail(friendVO.getUser()));
+        friend.setFriend(accountRepository.findAccountByEmail(friendVO.getFriend()));
         friendRepository.save(friend);
     }
 
     public ArrayList<SimpleFriend> getFriendList(FriendVO friendVO){
-       List<Friend> friendList = friendRepository.findFriendsById(accountRepository.findAccountByUsername(friendVO.getUser()));
+
+       String bla = accountRepository.findUsernameByEmail(friendVO.getUser());
+       if (bla == null){
+           System.out.println("wrong");
+           throw new RuntimeException();
+       }
+
+       List<Friend> friendList = friendRepository.findFriendsById(accountRepository.findAccountByEmail(friendVO.getUser()));
        ArrayList<SimpleFriend> simpleFriendArrayList = new ArrayList<SimpleFriend>();
        for(Friend f : friendList){
            SimpleFriend simpleFriend = new SimpleFriend();
@@ -48,7 +55,9 @@ public class FriendService {
     }
 
     public void deleteFriend(FriendVO friendVO) throws InvalidFriendException{
-        Friend friend = friendRepository.findFriendByUserAndFriend(accountRepository.findAccountByUsername(friendVO.getUser()),accountRepository.findAccountByUsername(friendVO.getFriend()));
+
+
+        Friend friend = friendRepository.findFriendByUserAndFriend(accountRepository.findAccountByEmail(friendVO.getUser()),accountRepository.findAccountByEmail(friendVO.getFriend()));
         if(friend == null){
             throw new InvalidFriendException("This person is not in your friend list");
         }else {
