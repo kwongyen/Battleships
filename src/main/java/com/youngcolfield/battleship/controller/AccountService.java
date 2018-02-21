@@ -4,6 +4,7 @@ import com.youngcolfield.battleship.domain.Account;
 import com.youngcolfield.battleship.domain.Stats;
 import com.youngcolfield.battleship.exceptions.InvalidLoginException;
 import com.youngcolfield.battleship.exceptions.InvalidRegistrationException;
+import com.youngcolfield.battleship.misc.AccountLoginId;
 import com.youngcolfield.battleship.misc.RegisterVO;
 import com.youngcolfield.battleship.misc.SimpleAccount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +87,13 @@ public class AccountService {
       simpleAccountList.add(simpleAccount);
     }
     return simpleAccountList;
+  }
+  public void deleteAccount(AccountLoginId account) throws InvalidLoginException{
+    Account a = accountRepository.findAccountByEmail(account.getId());
+    if(a == null){
+      throw new InvalidLoginException("This account does not exist");
+    }
+    accountRepository.delete(a);
   }
 
 }

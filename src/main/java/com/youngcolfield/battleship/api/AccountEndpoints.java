@@ -62,4 +62,16 @@ public class AccountEndpoints {
         return Response.ok(accounts).build();
     }
 
+    @Path("/delete")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteAccount(@Valid @NotNull AccountLoginId account) {
+        try{
+            accountService.deleteAccount(account);
+        }catch (Exception e){
+            return Response.status(HttpStatus.BAD_REQUEST.value()).entity(new StatusVO(e.toString())).build();
+        }
+        return Response.ok().build();
+    }
 }
