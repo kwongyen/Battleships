@@ -78,7 +78,7 @@ public class AccountService {
       simpleAccount.setUsername(a.getUsername());
       simpleAccount.setCountry(a.getCountry());
 
-      Stats stat = statsRepository.getRankUser(a.getId());
+      Stats stat = a.getStatsid();
       if(stat == null){
         throw new InvalidStatsException("Their are no stats linked to an account");
       }
@@ -103,6 +103,6 @@ public class AccountService {
       throw new InvalidLoginException("This account does not exist");
     }
     accountRepository.delete(a);
-    statsRepository.delete(statsRepository.getRankUser(a.getId()));
+    statsRepository.delete(a.getStatsid());
   }
 }
