@@ -58,8 +58,12 @@ public class AccountEndpoints {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccounts() {
-        List<SimpleAccount> accounts = accountService.getAccounts();
-        return Response.ok(accounts).build();
+        try {
+            List<SimpleAccount> accounts = accountService.getAccounts();
+            return Response.ok(accounts).build();
+        }catch(Exception e){
+            return Response.status(HttpStatus.BAD_REQUEST.value()).entity(new StatusVO(e.toString())).build();
+        }
     }
 
     @Path("/delete")
