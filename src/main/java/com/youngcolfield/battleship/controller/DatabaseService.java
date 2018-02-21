@@ -17,12 +17,17 @@ public class DatabaseService {
     private DatabaseRepository databaseRepository;
 
     @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
     private StatsService statsService;
 
     public void fillDatabaseWithAccounts(){
         for(int i=1; i<=5; i++){
             Account a = createAccount(i);
-            databaseRepository.save(a);
+            if(accountRepository.findAccountByEmail(a.getEmail()) == null){
+                databaseRepository.save(a);
+            }
         }
     }
 
