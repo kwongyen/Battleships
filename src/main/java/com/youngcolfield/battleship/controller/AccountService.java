@@ -4,6 +4,7 @@ import com.youngcolfield.battleship.domain.Account;
 import com.youngcolfield.battleship.domain.Stats;
 import com.youngcolfield.battleship.exceptions.InvalidLoginException;
 import com.youngcolfield.battleship.exceptions.InvalidRegistrationException;
+import com.youngcolfield.battleship.exceptions.InvalidStatsException;
 import com.youngcolfield.battleship.misc.AccountLoginId;
 import com.youngcolfield.battleship.misc.RegisterVO;
 import com.youngcolfield.battleship.misc.SimpleAccount;
@@ -69,7 +70,7 @@ public class AccountService {
     return account.getEmail();
   }
 
-  public ArrayList<SimpleAccount> getAccounts(){
+  public ArrayList<SimpleAccount> getAccounts() throws InvalidStatsException{
     List<Account> accounts = accountRepository.findAllAccounts();
     ArrayList<SimpleAccount> simpleAccountList = new ArrayList<>();
     for(Account a : accounts){
@@ -78,6 +79,9 @@ public class AccountService {
       simpleAccount.setCountry(a.getCountry());
 
       Stats stat = statsRepository.getRankUser(a.getId());
+      if(stat == null){
+        throw new InvalidStatsException("Their are no stats linked to an account");
+      }
       int win = stat.getWins();
       int loss = stat.getLosses();
       simpleAccount.setWins(win);
