@@ -56,7 +56,6 @@ public class AccountService {
     }
 
     accountRepository.save(account);
-
     return account.getEmail();
   }
 
@@ -102,5 +101,4 @@ public class AccountService {
     accountRepository.delete(a);
     statsRepository.delete(statsRepository.getRankUser(a.getId()));
   }
-
 }
