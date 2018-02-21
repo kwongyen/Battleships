@@ -37,7 +37,13 @@ public class AccountService {
     account.setEmail(registerVO.getEmail());
     account.setPassword(registerVO.getPassword());
     account.setUsername(registerVO.getUsername());
+    account.setCountry(registerVO.getCountry());
     account.setType(1);
+
+    Stats stats = new Stats();
+    stats.setLosses(0);
+    stats.setWins(0);
+    account.setStatsid(statsRepository.save(stats));
 
     String username = accountRepository.findUsernameByEmail(registerVO.getEmail());
     String email = accountRepository.findEmailByUsername(registerVO.getUsername());
@@ -94,6 +100,7 @@ public class AccountService {
       throw new InvalidLoginException("This account does not exist");
     }
     accountRepository.delete(a);
+    statsRepository.delete(statsRepository.getRankUser(a.getId()));
   }
 
 }

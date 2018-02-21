@@ -12,4 +12,5 @@ public class RegisterVO {
     private String password;
     @NotNull
     private String username;
+    private String country;
 }
