@@ -32,7 +32,7 @@ public class FriendEndpoints {
         try {
             friendService.addFriend(friendVO);
         }catch(Exception e){
-            return Response.status(HttpStatus.BAD_REQUEST.value()).entity(new StatusVO(e.toString())).build();
+            return Response.status(400).entity(new StatusVO(e.toString())).build();
         }
         return Response.ok().build();
     }
@@ -42,9 +42,12 @@ public class FriendEndpoints {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFriendList(@Valid FriendVO friendVO){
-        List<SimpleFriend> simpleFriendList = friendService.getFriendList(friendVO);
-
-        return Response.ok(simpleFriendList).build();
+        try {
+            List<SimpleFriend> simpleFriendList = friendService.getFriendList(friendVO);
+            return Response.ok(simpleFriendList).build();
+        } catch (Exception e) {
+            return Response.status(400).build();
+        }
     }
 
     @Path("/delete")
@@ -55,7 +58,7 @@ public class FriendEndpoints {
         try {
             friendService.deleteFriend(friendVO);
         }catch(Exception e){
-            return Response.status(HttpStatus.BAD_REQUEST.value()).entity(new StatusVO(e.toString())).build();
+            return Response.status(400).entity(new StatusVO(e.toString())).build();
         }
         return Response.ok().build();
     }

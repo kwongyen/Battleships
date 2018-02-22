@@ -22,6 +22,11 @@ public class FriendService {
 
     public void addFriend(FriendVO friendVO) throws InvalidFriendException{
         List<Friend> friendList = friendRepository.findFriendsById(accountRepository.findAccountByEmail(friendVO.getUser()));
+
+        if (accountRepository.findUsernameByEmail(friendVO.getFriend())==null){
+            throw new InvalidFriendException("This person does not exist in our database");
+        }
+
         for(Friend f : friendList) {
             if (f.getFriend().getEmail().equals(friendVO.getFriend())) {
                 throw new InvalidFriendException("This person is already your friend");
@@ -33,25 +38,23 @@ public class FriendService {
         friendRepository.save(friend);
     }
 
-    public ArrayList<SimpleFriend> getFriendList(FriendVO friendVO){
+    public ArrayList<SimpleFriend> getFriendList(FriendVO friendVO) throws InvalidFriendException{
 
-       String bla = accountRepository.findUsernameByEmail(friendVO.getUser());
-       if (bla == null){
-           System.out.println("wrong");
-           throw new RuntimeException();
-       }
+        try {
+            List<Friend> friendList = friendRepository.findFriendsById(accountRepository.findAccountByEmail(friendVO.getUser()));
+            ArrayList<SimpleFriend> simpleFriendArrayList = new ArrayList<SimpleFriend>();
+            for (Friend f : friendList) {
+                SimpleFriend simpleFriend = new SimpleFriend();
+                simpleFriend.setFriendname((f.getFriend()).getUsername());
+                simpleFriend.setFriendsince(f.getFriendsince());
+                simpleFriend.setPlayedgames(f.getPlayedgames());
 
-       List<Friend> friendList = friendRepository.findFriendsById(accountRepository.findAccountByEmail(friendVO.getUser()));
-       ArrayList<SimpleFriend> simpleFriendArrayList = new ArrayList<SimpleFriend>();
-       for(Friend f : friendList){
-           SimpleFriend simpleFriend = new SimpleFriend();
-           simpleFriend.setFriendname((f.getFriend()).getUsername());
-           simpleFriend.setFriendsince(f.getFriendsince());
-           simpleFriend.setPlayedgames(f.getPlayedgames());
-
-           simpleFriendArrayList.add(simpleFriend);
-       }
-       return simpleFriendArrayList;
+                simpleFriendArrayList.add(simpleFriend);
+            }
+            return simpleFriendArrayList;
+        } catch (Exception e) {
+            throw new InvalidFriendException("wrong");
+        }
     }
 
     public void deleteFriend(FriendVO friendVO) throws InvalidFriendException{
