@@ -33,6 +33,15 @@ public class AccountService {
 
   public String register(RegisterVO registerVO) throws InvalidRegistrationException {
 
+    String username = accountRepository.findUsernameByEmail(registerVO.getEmail());
+    String email = accountRepository.findEmailByUsername(registerVO.getUsername());
+
+    if (username != null) {
+      throw new InvalidRegistrationException("This email has already been taken");
+    }
+    if (email != null) {
+      throw new InvalidRegistrationException("This username has already been taken");
+    }
     Account account = new Account();
 
     account.setEmail(registerVO.getEmail());
@@ -45,16 +54,6 @@ public class AccountService {
     stats.setLosses(0);
     stats.setWins(0);
     account.setStatsid(statsRepository.save(stats));
-
-    String username = accountRepository.findUsernameByEmail(registerVO.getEmail());
-    String email = accountRepository.findEmailByUsername(registerVO.getUsername());
-
-    if (username != null) {
-      throw new InvalidRegistrationException("This email has already been taken");
-    }
-    if (email != null) {
-      throw new InvalidRegistrationException("This username has already been taken");
-    }
 
     accountRepository.save(account);
     return account.getEmail();
