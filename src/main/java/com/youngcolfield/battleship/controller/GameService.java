@@ -61,13 +61,30 @@ public class GameService {
     if(currentGame.getPlayertwo() == null){
       throw new InvalidTurnException("You don't have an opponent yet");
     }
-
+    if(!validMove(turnVO.getMove(),currentGame)){
+      throw new InvalidTurnException("This is not a valid move");
+    }
     boterKaasEierenService.updateCellsById(turnVO.getGameId(), turnVO.getMove());
     if(currentGame.getPlayerone().getEmail().equals(player)){
       currentGame.setCurrentPlayer(currentGame.getPlayertwo().getEmail());
     }else{
       currentGame.setCurrentPlayer(currentGame.getPlayerone().getEmail());
     }
+  }
+  private boolean validMove(String move, Game currentGame){
+    char[] cellArray = currentGame.getBoterKaasEieren().getCells().toCharArray();
+    char[] moveArray = move.toCharArray();
+    int changedcells = 0;
+    for(int i=0; i<cellArray.length; i++){
+      if(cellArray[i] != moveArray[i]){
+        if(cellArray[i] != '0'){
+          changedcells = 2;
+          System.out.println("changing invalid cell");
+        }
+        changedcells += 1;
+      }
+    }
+    return (changedcells == 1);
   }
 
   private Game getGame(Long gameId) throws InvalidGameException {
