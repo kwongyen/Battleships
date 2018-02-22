@@ -51,7 +51,7 @@ public class MessageEndpointsUT {
 
         ArrayList<SimpleMessage> simpleMessageArrayList = new ArrayList<>();
         SimpleMessage simpleMessage = new SimpleMessage();
-        simpleMessage.setMessage("hello receive");
+        simpleMessage.setText("hello receive");
         simpleMessageArrayList.add(simpleMessage);
 
         try {
