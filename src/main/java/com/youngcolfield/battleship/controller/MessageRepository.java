@@ -19,6 +19,6 @@ public interface MessageRepository extends CrudRepository<Message, Long> {
     @Query("select m.message from Message m where m.receiver = :id")
     List<Message> findReceivedMessagesByEmail(@Param("id") Account id);
 
-    @Query("select m from Message m where m.receiver =:receiverId and m.sender =:senderId")
+    @Query("select m from Message m where m.receiver =:receiverId and m.sender =:senderId or m.sender =:receiverId and m.receiver =:senderId")
     List<Message> findSentMessagesByEmail(@Param("receiverId") Account receiverId, @Param("senderId") Account senderId);
 }

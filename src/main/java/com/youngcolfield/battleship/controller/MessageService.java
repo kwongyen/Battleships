@@ -42,10 +42,18 @@ public class MessageService {
     public ArrayList<SimpleMessage> receiveMessage(ChatVO chatVO) {
         List<Message> messageList = messageRepository.findSentMessagesByEmail(accountRepository.findAccountByEmail(chatVO.getReceiverId()), accountRepository.findAccountByEmail(chatVO.getSenderId()));
 
+
         ArrayList<SimpleMessage> simpleMessageArrayList = new ArrayList<>();
 
         for (Message m : messageList){
           SimpleMessage simpleMessage = new SimpleMessage(m);
+
+          if (m.getSender().getEmail().equals(chatVO.getReceiverId())) {
+              simpleMessage.setAuthor("me");
+          } else {
+              simpleMessage.setAuthor("you");
+          }
+
           simpleMessageArrayList.add(simpleMessage);
         }
         return simpleMessageArrayList;

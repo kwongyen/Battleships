@@ -8,13 +8,15 @@ import java.time.LocalDateTime;
 @Data
 public class SimpleMessage {
 
-  private String message;
-  private LocalDateTime date;
+  private String author;
+  private String text;
+  private LocalDateTime created;
 
   public SimpleMessage(){}
 
   public SimpleMessage(Message message) {
-    this.message = message.getMessage();
-    this.date = message.getDate();
+    this.author = message.getSender().getEmail();
+    this.text = message.getMessage();
+    this.created = message.getDate();
   }
 }
