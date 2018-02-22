@@ -2,7 +2,9 @@ package com.youngcolfield.battleship.UnitTests.controller;
 
 import com.youngcolfield.battleship.controller.AccountRepository;
 import com.youngcolfield.battleship.controller.AccountService;
+import com.youngcolfield.battleship.controller.StatsRepository;
 import com.youngcolfield.battleship.domain.Account;
+import com.youngcolfield.battleship.domain.Stats;
 import com.youngcolfield.battleship.exceptions.InvalidLoginException;
 import com.youngcolfield.battleship.exceptions.InvalidRegistrationException;
 import com.youngcolfield.battleship.misc.AccountVO;
@@ -18,10 +20,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,9 +29,13 @@ public class AccountServiceUT {
 
   final static String TESTEMAIL = "daniel@email.com";
   final static String TESTPASSWORD = "123123";
-  
+  final static String TESTUSERNAME = "123123";
+
   @Mock
   private AccountRepository accountRepository;
+
+  @Mock
+  private StatsRepository statsRepository;
 
   @InjectMocks
   private AccountService accountService;
@@ -42,10 +46,13 @@ public class AccountServiceUT {
     RegisterVO registerVO = new RegisterVO();
     registerVO.setEmail(TESTEMAIL);
     registerVO.setPassword(TESTPASSWORD);
-    registerVO.setUsername("kloekie");
+    registerVO.setUsername(TESTUSERNAME);
 
     /// MOCKITO
+    when(statsRepository.save(any(Stats.class))).thenReturn(new Stats());
+
     when(accountRepository.findUsernameByEmail(any(String.class))).thenReturn(null);
+    when(accountRepository.findEmailByUsername(registerVO.getUsername())).thenReturn(null);
 
     String answer;
 
@@ -66,15 +73,20 @@ public class AccountServiceUT {
     RegisterVO registerVO = new RegisterVO();
     registerVO.setEmail(TESTEMAIL);
     registerVO.setPassword(TESTPASSWORD);
-    registerVO.setUsername("bloebla");
+    registerVO.setUsername(TESTUSERNAME);
 
     Account account = new Account();
     account.setEmail(TESTEMAIL);
 
-    when(accountRepository.findUsernameByEmail(any(String.class))).thenReturn(TESTEMAIL);
+    when(statsRepository.save(any(Stats.class))).thenReturn(new Stats());
+
+    when(accountRepository.findUsernameByEmail(any(String.class))).thenReturn(TESTUSERNAME);
+    when(accountRepository.findEmailByUsername(registerVO.getUsername())).thenReturn(TESTEMAIL);
+
 
     try {
       accountService.register(registerVO);
+      fail();
     } catch (InvalidRegistrationException e){
       return;
     } catch (Exception e) {
