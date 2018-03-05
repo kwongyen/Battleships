@@ -23,6 +23,14 @@ public class FriendService {
     public void addFriend(FriendVO friendVO) throws InvalidFriendException{
         List<Friend> friendList = friendRepository.findFriendsById(accountRepository.findAccountByEmail(friendVO.getUser()));
 
+        if (friendVO.getFriend().equals(friendVO.getUser())){
+            throw new InvalidFriendException("Can't add your self, dummy!");
+        }
+
+        if (accountRepository.findUsernameByEmail(friendVO.getUser())==null){
+            throw new InvalidFriendException("User does not exist");
+        }
+
         if (accountRepository.findUsernameByEmail(friendVO.getFriend())==null){
             throw new InvalidFriendException("This person does not exist in our database");
         }
@@ -44,11 +52,7 @@ public class FriendService {
             List<Friend> friendList = friendRepository.findFriendsById(accountRepository.findAccountByEmail(friendVO.getUser()));
             ArrayList<SimpleFriend> simpleFriendArrayList = new ArrayList<SimpleFriend>();
             for (Friend f : friendList) {
-                SimpleFriend simpleFriend = new SimpleFriend();
-                simpleFriend.setFriendname((f.getFriend()).getUsername());
-                simpleFriend.setFriendsince(f.getFriendsince());
-                simpleFriend.setPlayedgames(f.getPlayedgames());
-
+                SimpleFriend simpleFriend = new SimpleFriend(f);
                 simpleFriendArrayList.add(simpleFriend);
             }
             return simpleFriendArrayList;
