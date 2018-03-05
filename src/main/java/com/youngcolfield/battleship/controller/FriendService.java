@@ -23,6 +23,10 @@ public class FriendService {
     public void addFriend(FriendVO friendVO) throws InvalidFriendException{
         List<Friend> friendList = friendRepository.findFriendsById(accountRepository.findAccountByEmail(friendVO.getUser()));
 
+        if (friendVO.getFriend().equals(friendVO.getUser())){
+            throw new InvalidFriendException("Can't add your self, dummy!");
+        }
+
         if (accountRepository.findUsernameByEmail(friendVO.getUser())==null){
             throw new InvalidFriendException("User does not exist");
         }
